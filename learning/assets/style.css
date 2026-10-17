@@ -1,0 +1,91 @@
+/* Shared lesson and reference stylesheet. Every lesson links this file. */
+:root {
+  --bg: #fffff8;
+  --fg: #111;
+  --muted: #5a5a52;
+  --rule: #d9d6c8;
+  --accent: #8b2c1a;
+  --code-bg: #f3f1e6;
+  --ok: #1d6b35;
+  --bad: #9b1c1c;
+  --measure: 38rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151513;
+    --fg: #e8e6dc;
+    --muted: #a5a296;
+    --rule: #3a3933;
+    --accent: #e08a6d;
+    --code-bg: #22221e;
+    --ok: #7fcf96;
+    --bad: #f08c8c;
+  }
+}
+
+* { box-sizing: border-box; }
+html { font-size: 18px; }
+body {
+  margin: 0 auto;
+  padding: 3rem 1rem 6rem;
+  max-width: calc(var(--measure) + 2rem);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  line-height: 1.55;
+}
+h1, h2, h3 { font-weight: 400; line-height: 1.2; }
+h1 { font-size: 2.1rem; margin: 0 0 0.25rem; }
+h2 { font-size: 1.45rem; font-style: italic; margin-top: 2.5rem; }
+h3 { font-size: 1.15rem; margin-top: 1.75rem; }
+.subtitle { color: var(--muted); font-style: italic; margin-top: 0; }
+a { color: var(--accent); text-underline-offset: 2px; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+code, pre, kbd { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.82em; }
+code { background: var(--code-bg); padding: 0.1em 0.3em; border-radius: 3px; }
+pre { background: var(--code-bg); padding: 0.9rem 1rem; overflow-x: auto; border-radius: 4px; line-height: 1.4; }
+pre code { background: none; padding: 0; }
+
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin: 1.25rem 0; }
+th, td { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; }
+
+blockquote { margin: 1.25rem 0; padding-left: 1rem; border-left: 3px solid var(--rule); color: var(--muted); }
+
+/* Callouts: <aside class="note">, <aside class="source">, <aside class="ask"> */
+aside { margin: 1.5rem 0; padding: 0.75rem 1rem; border-left: 3px solid var(--accent); background: var(--code-bg); font-size: 0.92rem; }
+aside.source::before { content: "Primary source: "; font-weight: 600; }
+aside.ask::before { content: "Stuck? "; font-weight: 600; }
+
+/* Sidenotes, Tufte style: <span class="sidenote">...</span> */
+.sidenote { display: block; font-size: 0.8rem; color: var(--muted); margin: 0.5rem 0 0.5rem 1rem; }
+@media (min-width: 70rem) {
+  body { position: relative; }
+  .sidenote { float: right; clear: right; margin: 0 -17rem 1rem 0; width: 15rem; }
+}
+
+nav.lesson-nav { display: flex; justify-content: space-between; margin-top: 3rem; font-size: 0.9rem; }
+
+/* Quiz and recall components (see quiz.js) */
+.quiz, .recall { margin: 1.5rem 0; padding: 1rem; border: 1px solid var(--rule); border-radius: 6px; }
+.quiz .q, .recall .q { margin-top: 0; font-weight: 600; }
+.quiz ol { list-style: upper-alpha; padding-left: 1.5rem; }
+.quiz li { cursor: pointer; padding: 0.3rem 0.4rem; border-radius: 4px; }
+.quiz li:hover { background: var(--code-bg); }
+.quiz li.correct { color: var(--ok); font-weight: 600; }
+.quiz li.wrong { color: var(--bad); text-decoration: line-through; }
+.quiz .explain, .recall .answer { display: none; margin-top: 0.75rem; font-size: 0.92rem; }
+.quiz.answered .explain, .recall.revealed .answer { display: block; }
+.recall textarea { width: 100%; min-height: 5rem; font: inherit; padding: 0.5rem; background: var(--bg); color: var(--fg); border: 1px solid var(--rule); border-radius: 4px; }
+.recall button { margin-top: 0.5rem; font: inherit; padding: 0.3rem 0.8rem; cursor: pointer; }
+
+@media print {
+  :root { --bg: #fff; --fg: #000; }
+  body { padding: 0; max-width: none; font-size: 11pt; }
+  a { color: inherit; }
+  .quiz li { cursor: default; }
+  .quiz .explain, .recall .answer { display: block; }
+  .recall textarea, .recall button { display: none; }
+  nav.lesson-nav { display: none; }
+}

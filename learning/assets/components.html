@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson components</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="quiz.js" defer></script>
+</head>
+<body>
+  <h1>Lesson components</h1>
+  <p class="subtitle">A sample of every shared component. Copy from here when building a lesson. Lessons live in <code>lessons/</code> and link <code>../assets/style.css</code> and <code>../assets/quiz.js</code>.</p>
+
+  <h2>Callouts</h2>
+  <aside class="source"><a href="../../skills/engineering/diagnosing-bugs/SKILL.md">diagnosing-bugs/SKILL.md</a>, Phase 1.</aside>
+  <aside class="ask">Ask the agent a follow-up question. It is your teacher.</aside>
+  <aside class="note">A plain note.</aside>
+
+  <h2>Quiz</h2>
+  <div class="quiz">
+    <p class="q">What must exist before the diagnosing-bugs skill allows a hypothesis?</p>
+    <ol>
+      <li data-correct>A command already run that goes red</li>
+      <li>A ranked list of five suspect modules</li>
+      <li>A regression test at the right seam</li>
+    </ol>
+    <p class="explain">Phase 1's completion criterion is one red-capable, deterministic, fast command that has already been run. No red-capable command, no Phase 2.</p>
+  </div>
+
+  <h2>Recall</h2>
+  <div class="recall">
+    <p class="q">Name the five phase-boundary options, in the order you rule them out.</p>
+    <div class="answer">Continue, <code>/clear</code>, <code>/handoff</code>, subagent, <code>/compact</code>.</div>
+  </div>
+</body>
+</html>

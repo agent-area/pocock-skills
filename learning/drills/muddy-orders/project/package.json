@@ -1,0 +1,13 @@
+{
+  "name": "muddy-orders",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Order intake for a small online shop.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
