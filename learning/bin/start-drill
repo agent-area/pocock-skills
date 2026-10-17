@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# Copy a drill's project into its own git repo, outside this skills repo, so
+# the agent works in a clean directory with its own history.
+#
+#   learning/bin/start-drill                 list drills
+#   learning/bin/start-drill <drill> [dest]  start one (default dest: $DOJO_DIR/<drill>)
+#
+# DOJO_DIR defaults to ~/pocock-dojo-drills.
+set -euo pipefail
+
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+drills="$here/drills"
+
+if [[ $# -eq 0 ]]; then
+  echo "Drills:"
+  for d in "$drills"/*/; do
+    name="$(basename "$d")"
+    module="$(grep -m1 '^\*\*Curriculum:\*\*' "$d/BRIEF.md" 2>/dev/null | sed 's/^\*\*Curriculum:\*\* //')"
+    printf '  %-22s %s\n' "$name" "$module"
+  done
+  echo
+  echo "Start one with: $0 <drill>"
+  exit 0
+fi
+
+name="$1"
+src="$drills/$name"
+[[ -d "$src" ]] || { echo "No drill called '$name'. Run $0 to list them." >&2; exit 1; }
+
+dest="${2:-${DOJO_DIR:-$HOME/pocock-dojo-drills}/$name}"
+if [[ -e "$dest" ]]; then
+  echo "$dest already exists. Delete it or pass another destination to restart the drill." >&2
+  exit 1
+fi
+mkdir -p "$dest"
+
+# A drill can build on another drill's project (BASE), then add its own
+# project/ files and an overlay/ (e.g. issues already on the tracker).
+if [[ -f "$src/BASE" ]]; then
+  base="$(tr -d '[:space:]' < "$src/BASE")"
+  cp -R "$drills/$base/project/." "$dest/"
+fi
+[[ -d "$src/project" ]] && cp -R "$src/project/." "$dest/"
+[[ -d "$src/overlay" ]] && cp -R "$src/overlay/." "$dest/"
+
+# Keep caches out of the drill's history.
+cat > "$dest/.gitignore" <<'IGNORE'
+__pycache__/
+*.pyc
+node_modules/
+IGNORE
+
+(
+  cd "$dest"
+  git init -q
+  git add -A
+  git -c user.name="dojo" -c user.email="dojo@localhost" commit -q -m "Drill baseline: $name"
+  git tag drill-start
+)
+
+echo "Drill '$name' is ready in: $dest"
+echo "Brief: $src/BRIEF.md"
+echo "Fixed point for /code-review: the 'drill-start' tag."

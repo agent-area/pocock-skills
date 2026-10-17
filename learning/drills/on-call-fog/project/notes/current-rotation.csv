@@ -1,0 +1,9 @@
+week_start,primary,secondary,notes
+2026-01-05,dev,kofi,
+2026-01-12,kofi,lin,
+2026-01-19,lin,priya,lin no nights (dev covers 22:00-07:00)
+2026-01-26,priya,dev,
+2026-02-02,dev,kofi,swap: kofi<->dev sat only
+2026-02-09,kofi,priya,lin skipped (nights)
+2026-02-16,priya,dev,public holiday mon (counts double?)
+2026-02-23,dev,kofi,
